@@ -14,9 +14,15 @@ function ConvertHandler() {
   };
   
   this.getUnit = function(input) {
-    let result;
+    const unitSet = ['gal', 'L', 'mi', 'km', 'lbs', 'kg'];
+
+    let result = unitSet.includes(input);
     
-    return result;
+    if (result) {
+      return input;
+    } else {
+      throw new Error("Invalid input unit");
+    };
   };
   
   this.getReturnUnit = function(initUnit) {
