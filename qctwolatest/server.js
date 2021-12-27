@@ -14,9 +14,9 @@ const io = require('socket.io')(http);
 const session = require('express-session');
 const passportSocketIo = require('passport.socketio');
 const cookieParser = require('cookie-parser');
-const MongoStore = require('connect-mongo')(session);
+const MongoStore = require('connect-mongo')
 const URI = process.env.MONGO_URI;
-const store = new MongoStore({ url: URI });
+const store = new MongoStore({ mongoUrl: URI });
 
 
 // ----------- middleware -----------
@@ -91,7 +91,6 @@ myDB(async client => {
         connected: false
       });
     });
-
   });
 
   app.use((req, res, next) => {

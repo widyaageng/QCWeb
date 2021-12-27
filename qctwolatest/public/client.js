@@ -1,9 +1,9 @@
 /*global io*/
 let socket = io();
 
-$(document).ready(function () {
+$(document).ready(function() {
   // Form submittion with new message in field with id 'm'
-  $('form').submit(function () {
+  $('form').submit(function() {
     var messageToSend = $('#m').val();
 
     socket.emit('chat message', messageToSend);
@@ -24,7 +24,7 @@ $(document).ready(function () {
     $('#messages').append($('<li>').html('<b>' + message.name + '</b>' + ' : ' + message.message));
   });
 
-  $("#logout").click(function () {
+  $("#logout").click(function() {
     socket.on('disconnect', () => {
       console.log("disconnected");
     });
@@ -33,5 +33,4 @@ $(document).ready(function () {
   socket.on('disconnect', () => {
     console.log("disconnected");
   });
-
 });

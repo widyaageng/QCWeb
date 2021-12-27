@@ -56,7 +56,7 @@ module.exports = function (app, myDataBase) {
         },
             passport.authenticate('local', { failureRedirect: '/' }),
             (req, res, next) => {
-                res.redirect('/profile', {
+                res.render('pug/profile', {
                     username: req.user.username,
                 });
             }
