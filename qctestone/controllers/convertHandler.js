@@ -1,9 +1,16 @@
 function ConvertHandler() {
   
   this.getNum = function(input) {
-    let result;
+    let regPattern = /^\d+(?:\.\d+(?:\/\d+(?:\.\d+|))*|\/(?:\d+\.\d+|\d+)|)$/
+    let result = String(input).match(regPattern);
     
-    return result;
+    if (input == null) {
+      return 1;
+    } else if (!result) {
+      throw new Error("Invalid input number");
+    } else {
+      return (String(input).split('.')).length > 1 ? parseFloat(input) : parseInt(input);
+    }
   };
   
   this.getUnit = function(input) {
