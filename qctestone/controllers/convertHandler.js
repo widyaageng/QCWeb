@@ -7,7 +7,7 @@ function ConvertHandler() {
     if (input == null || input === '') {
       return 1;
     } else if (!result) {
-      throw new Error("invalid number");
+      return 'invalid number';
     } else {
       let terms = String(input).split('/');
 
@@ -27,7 +27,7 @@ function ConvertHandler() {
     if (result) {
       return input === 'l' || input === 'L' ? 'L' : input.toLowerCase();
     } else {
-      throw new Error("invalid unit");
+      return 'invalid unit';
     };
   };
 
@@ -46,7 +46,7 @@ function ConvertHandler() {
     if (result) {
       return unitPairSet[unit];
     } else {
-      throw new Error("invalid unit");
+      return 'invalid unit';
     };
   };
 
@@ -101,11 +101,11 @@ function ConvertHandler() {
           'mi': initNum
         };
       default:
-        throw new Error("Invalid arguments")
+        return 'invalid unit';
     }
   };
   
-  this.getString = function(initNum, initUnit, returnNum, returnUnit) {
+  this.getString = function(initNum, initUnit, res, returnUnit) {
     let result = {
       getNumError: '',
       getUnitError: ''
@@ -125,11 +125,13 @@ function ConvertHandler() {
     };
 
     if ((result.getNumError + result.getUnitError).length == 0) {
-      console.log("Total length : ", (result.getNumError + result.getUnitError));
       result.outNumber = this.convert(result.initNum, result.initUnit)[result.returnUnit];
-      console.log("Total result : ", result.outNumber);
+    } else if (result.getNumError.length > 1 && result.getUnitError.length > 1) {
+      return 'invalid number and unit';
+    } else if (result.getNumError.length > 1) {
+      return 'invalid number';
     } else {
-      throw new Error('invalid number and unit');
+      return 'invalid unit';
     }
 
     let initNumber = parseFloat(result.initNum.toFixed(5));

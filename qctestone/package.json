@@ -5,7 +5,7 @@
 	"main": "server.js",
 	"scripts": {
 		"start": "node server.js",
-		"test": "mocha ./tests/ --ui tdd",
+		"test": "mocha ./tests/ --ui tdd --exit",
 		"dev": "nodemon server.js"
 	},
 	"dependencies": {

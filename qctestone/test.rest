@@ -1,0 +1,14 @@
+GET http://localhost:3000/api/convert?input=10L
+
+#################################
+GET http://localhost:3000/api/convert?input=32g
+
+#################################
+GET http://localhost:3000/api/convert?input=kg
+
+#################################
+GET http://localhost:3000/api/convert?input=10KM
+
+#################################
+GET http://localhost:3000/api/convert?input=1/5mi
+#################################
