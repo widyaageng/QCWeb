@@ -11,9 +11,9 @@ suite('Functional Tests', function () {
             const tempDict = {
                 "reqParam": '?input=10L',
                 "initNum": 10,
-                "initUnit": "litres",
+                "initUnit": "L",
                 "returnNum": 2.64172,
-                "returnUnit": "gallons",
+                "returnUnit": "gal",
                 "string": "10 litres converts to 2.64172 gallons"
             };
 
@@ -78,9 +78,9 @@ suite('Functional Tests', function () {
             const tempDict = {
                 "reqParam": '?input=kg',
                 "initNum": 1,
-                "initUnit": "kilograms",
+                "initUnit": "kg",
                 "returnNum": 2.20462,
-                "returnUnit": "pounds",
+                "returnUnit": "lbs",
                 "string": "1 kilograms converts to 2.20462 pounds"
             };
 

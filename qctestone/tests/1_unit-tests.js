@@ -43,9 +43,9 @@ suite('Unit Tests', function () {
         test('getString checker', function () {
             let result = convertHandler.getString('50/5.7', 'kG', '', '');
             assert.approximately(result.initNum, 50 / 5.7, 0.1);
-            assert.equal(result.initUnit, 'kilograms');
+            assert.equal(result.initUnit, 'kg');
             assert.approximately(result.returnNum, 19.2, 0.3);
-            assert.equal(result.returnUnit, 'pounds');
+            assert.equal(result.returnUnit, 'lbs');
             assert.equal(convertHandler.getString('5/5/5', 'yada'), 'invalid number and unit');
         });
     });

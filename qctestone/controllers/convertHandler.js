@@ -134,9 +134,9 @@ function ConvertHandler() {
     
     return {
       initNum: initNumber,
-      initUnit: this.spellOutUnit(result.initUnit),
+      initUnit: result.initUnit,
       returnNum: returnNumber,
-      returnUnit: this.spellOutUnit(result.returnUnit),
+      returnUnit: result.returnUnit,
       string: `${initNumber} ${this.spellOutUnit(result.initUnit)} converts to ${returnNumber} ${this.spellOutUnit(result.returnUnit)}`
     };
   };
