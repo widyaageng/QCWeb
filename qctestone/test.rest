@@ -1,4 +1,4 @@
-GET http://localhost:3000/api/convert?input=10L
+GET http://localhost:3000/api/convert?input=lbs
 
 #################################
 GET http://localhost:3000/api/convert?input=32g
