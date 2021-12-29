@@ -111,24 +111,19 @@ function ConvertHandler() {
       getUnitError: ''
     };
 
-    try {
-      result.initNum = this.getNum(initNum);
-    } catch (error) {
-      result.getNumError = error.message;
-    };
 
-    try {
-      result.initUnit = this.getUnit(initUnit);
-      result.returnUnit = this.getReturnUnit(result.initUnit);
-    } catch (error) {
-      result.getUnitError = error.message;
-    };
+    result.initNum = this.getNum(initNum);
+    result.getNumError = result.initNum === 'invalid number';
 
-    if ((result.getNumError + result.getUnitError).length == 0) {
+    result.initUnit = this.getUnit(initUnit);
+    result.returnUnit = this.getReturnUnit(result.initUnit);
+    result.getUnitError =  result.returnUnit === 'invalid unit';
+
+    if (!result.getNumError && !result.getUnitError) {
       result.outNumber = this.convert(result.initNum, result.initUnit)[result.returnUnit];
-    } else if (result.getNumError.length > 1 && result.getUnitError.length > 1) {
+    } else if (result.getNumError && result.getUnitError) {
       return 'invalid number and unit';
-    } else if (result.getNumError.length > 1) {
+    } else if (result.getNumError) {
       return 'invalid number';
     } else {
       return 'invalid unit';
