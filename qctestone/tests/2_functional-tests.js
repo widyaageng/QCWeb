@@ -40,38 +40,39 @@ suite('Functional Tests', function () {
                 .get(`/api/convert${tempDict.reqParam}`)
                 .end(function (err, res) {
                     assert.equal(res.status, 200);
-                    console.log(res.body);
-                    // assert(err.message).equal(tempDict.message);
+                    assert.equal(res.body, tempDict.message);
                 });
         });
 
-        // test('3/7.2/4kg bad number convert', function () {
-        //     const tempDict = {
-        //         "reqParam": '?input=3/7.2/4kg ',
-        //         "message": 'invalid number'
-        //     };
+        test('3/7.2/4kg bad number convert', function () {
+            const tempDict = {
+                "reqParam": '?input=3/7.2/4kg ',
+                "message": 'invalid number'
+            };
 
-        //     chai
-        //         .request(server)
-        //         .get(`/api/convert${tempDict.reqParam}`)
-        //         .end(function (err, res) {
-        //             assert(err.message).equal(tempDict.message);
-        //         });
-        // });
+            chai
+                .request(server)
+                .get(`/api/convert${tempDict.reqParam}`)
+                .end(function (err, res) {
+                    assert.equal(res.status, 200);
+                    assert.equal(res.body, tempDict.message);
+                });
+        });
 
-        // test('3/7.2/4kilomegagram bad number & input convert', function () {
-        //     const tempDict = {
-        //         "reqParam": '?input=3/7.2/4kilomegagram',
-        //         "message": 'invalid number and unit'
-        //     };
+        test('3/7.2/4kilomegagram bad number & input convert', function () {
+            const tempDict = {
+                "reqParam": '?input=3/7.2/4kilomegagram',
+                "message": 'invalid number and unit'
+            };
 
-        //     chai
-        //         .request(server)
-        //         .get(`/api/convert${tempDict.reqParam}`)
-        //         .end(function (err, res) {
-        //             assert(err.message).equal(tempDict.message);
-        //         });
-        // });
+            chai
+                .request(server)
+                .get(`/api/convert${tempDict.reqParam}`)
+                .end(function (err, res) {
+                    assert.equal(res.status, 200);
+                    assert.equal(res.body, tempDict.message);
+                });
+        });
 
         test('kg no number conver', function () {
             const tempDict = {
