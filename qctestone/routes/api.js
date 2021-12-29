@@ -9,10 +9,13 @@ module.exports = function (app) {
 
   app.get('/api/convert', function (req, res) {
     let separatorIdx = req.query.input.match(/[a-zA-Z]/).index;
-    
-    res.json(convertHandler.getString(
+
+    let outResult = convertHandler.getString(
       req.query.input.slice(0, separatorIdx),
-      req.query.input.slice(separatorIdx)
-    ));
+      req.query.input.slice(separatorIdx),
+      res
+    );
+
+    res.json(outResult);
   });
 };
