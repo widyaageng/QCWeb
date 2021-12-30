@@ -1,0 +1,35 @@
+POST http://localhost:3000/api/issues/projectb?
+Content-Type: application/x-www-form-urlencoded
+
+issue_title=Issue%231
+&issue_text=It%20doesnt%20work%20still
+&created_by=adminsolo
+
+################################
+POST http://localhost:3000/api/issues/projectb?
+Content-Type: application/x-www-form-urlencoded
+
+issue_title=Issue%232
+&issue_text=It%20doesnt%20work%20still%202
+&created_by=adminsolo
+
+################################
+POST http://localhost:3000/api/issues/projectb?
+Content-Type: application/x-www-form-urlencoded
+
+issue_title=Issue%233
+&issue_text=It%20doesnt%20work%20still%203
+&created_by=adminsolo
+
+################################
+POST http://localhost:3000/api/issues/projectb?
+Content-Type: application/x-www-form-urlencoded
+
+issue_title=Issue%234
+&issue_text=It%20doesnt%20work%20still%204
+
+################################
+GET http://localhost:3000/api/issues/projectb
+Content-Type: application/x-www-form-urlencoded
+
+################################

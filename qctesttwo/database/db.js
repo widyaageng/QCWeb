@@ -15,6 +15,7 @@ const uri = process.env.MONGO_URI;
 const { Schema } = mongooseHandler;
 
 const issueSchema = new Schema({
+    project_title: String,
     issue_title: String,
     issue_text: String,
     created_on: String,
@@ -29,6 +30,7 @@ let IssueModel = mongooseHandler.model('Issue', issueSchema);
 
 const createIssue = (issue, done) => {
     let issueEntry = {
+        project_title: issue.project_title,
         issue_title: issue.issue_title,
         issue_text: issue.issue_text,
         created_on: issue.created_on,
@@ -47,8 +49,21 @@ const createIssue = (issue, done) => {
     })
 };
 
+const listProjectIssue = (projectName, done) => {
+    IssueModel.find(
+        { 'project_title': projectName },
+        { _id: 0, project_title: 0, __v:0}
+    ).sort({
+        'updated_on': 'asc'
+    }).exec(function (err, data) {
+        if (err) return done(err);
+        done(null, data);
+    });
+};
+
 // -------------------------------- exports --------------------------------
 exports.mongooseHandler = mongooseHandler;
 exports.IssueModel = IssueModel;
 exports.createIssue = createIssue;
+exports.listProjectIssue = listProjectIssue;
 
