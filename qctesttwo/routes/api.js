@@ -19,7 +19,7 @@ module.exports = function (app) {
       let project = req.params.project;
 
       const requiredFields = ['issue_title', 'issue_text', 'created_by'];
-      const optionalFields = ['assigned_to', 'status_text'];
+      // const optionalFields = ['assigned_to', 'status_text'];
 
       let requiredFieldCheck = requiredFields.every(item => Object.keys(req.body).includes(item));
       if (!requiredFieldCheck) {
