@@ -27,9 +27,24 @@ Content-Type: application/x-www-form-urlencoded
 
 issue_title=Issue%234
 &issue_text=It%20doesnt%20work%20still%204
+&created_by=adminduo
 
 ################################
 GET http://localhost:3000/api/issues/projectb
 Content-Type: application/x-www-form-urlencoded
 
+################################
+GET http://localhost:3000/api/issues/projectb?
+Content-Type: application/x-www-form-urlencoded
+
+open=true
+&created_by=adminsolo
+&issue_title=
+################################
+PUT http://localhost:3000/api/issues/projectb?
+Content-Type: application/x-www-form-urlencoded
+
+_id=61cea0d19b031501d1c7fa66
+&created_by=adminquatro
+&created_on=2021-12-31
 ################################

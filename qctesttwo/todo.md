@@ -17,7 +17,7 @@ returned will be the error { error: 'required field(s) missing' }
 all issues for that specific projectname,
 with all the fields present for each issue.
 
-* [ ] You can send a GET request to /api/issues/{projectname} and filter the request by
+* [X] ~~*You can send a GET request to /api/issues/{projectname} and filter the request by*~~ [2021-12-31]
 also passing along any field and
 value as a URL query (ie. /api/issues/{project}?open=false).
 You can pass one or more field/value pairs at once.
