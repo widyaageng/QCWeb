@@ -33,11 +33,9 @@ the return value is { error: 'missing _id' }.
 the return value is { error: 'no update field(s) sent', '_id': _id }. On any other error,
 the return value is { error: 'could not update', '_id': _id }.
 
-* [ ] You can send a DELETE request to /api/issues/{projectname} with an _id to delete an issue.
+* [X] ~~*You can send a DELETE request to /api/issues/{projectname} with an _id to delete an issue.*~~ [2021-12-31]
 If no _id is sent, the return value is { error: 'missing _id' }.
 On success, the return value is { result: 'successfully deleted', '_id': _id }.
 On failure, the return value is { error: 'could not delete', '_id': _id }.
 
 * [ ] All 14 functional tests are complete and passing.
-
-* [ ] Navigated to Quality Assurance Projects - Issue Tracker | Learn | freeCodeCamp.org
