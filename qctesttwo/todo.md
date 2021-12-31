@@ -22,14 +22,14 @@ also passing along any field and
 value as a URL query (ie. /api/issues/{project}?open=false).
 You can pass one or more field/value pairs at once.
 
-* [ ] You can send a PUT request to /api/issues/{projectname} with an _id and one or more fields to update.
+* [X] ~~*You can send a PUT request to /api/issues/{projectname} with an _id and one or more fields to update.*~~ [2021-12-31]
 On success, the updated_on field should be updated, and returned should be 
 {  result: 'successfully updated', '_id': _id }.
 
-* [ ] When the PUT request sent to /api/issues/{projectname} does not include an _id,
+* [X] ~~*When the PUT request sent to /api/issues/{projectname} does not include an _id,*~~ [2021-12-31]
 the return value is { error: 'missing _id' }.
 
-* [ ] When the PUT request sent to /api/issues/{projectname} does not include update fields,
+* [X] ~~*When the PUT request sent to /api/issues/{projectname} does not include update fields,*~~ [2021-12-31]
 the return value is { error: 'no update field(s) sent', '_id': _id }. On any other error,
 the return value is { error: 'could not update', '_id': _id }.
 

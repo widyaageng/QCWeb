@@ -75,9 +75,12 @@ module.exports = function (app) {
       let projectProps = Object.keys(req.body);
 
       let schemaProps = Object.keys(DB.IssueModel.schema.paths);
-      schemaProps.splice(schemaProps.indexOf('__v'));
 
       if (!projectProps.includes('_id')) {
+        res.json({
+          error: 'missing _id'
+        });
+      } else if (req.body._id == '') {
         res.json({
           error: 'missing _id'
         });
@@ -85,15 +88,29 @@ module.exports = function (app) {
         res.json({
           error: 'no update field(s) sent', '_id': req.body._id
         })
-      } else if (projectProps.filter(item => schemaProps.includes(item))) {
+      } else if (projectProps.every(item => schemaProps.includes(item))) {
+
         let projectId = req.body._id;
         let issueUpdates = Object.assign({}, req.body);
         issueUpdates.project_title = project;
+
+        if (issueUpdates.created_on == undefined || issueUpdates.created_on == '') {
+
+        } else {
+          issueUpdates.created_on = (new Date(issueUpdates.created_on)).toISOString();
+        }
+
+        issueUpdates.updated_on = (new Date()).toISOString();
         delete issueUpdates._id;
 
         DB.updateProjectIssue(projectId, issueUpdates, function (err, issue) {
           if (err) return res.send(err);
-          res.json(issue);
+          console.log("Record update :\n", issue);
+          if (issue) {
+            res.json({ result: 'successfully updated', '_id': projectId });
+          } else {
+            res.json({ error: 'could not update', '_id': req.body._id });
+          }
         });
       } else {
         res.json({
@@ -101,10 +118,21 @@ module.exports = function (app) {
         });
       };
     })
-
     .delete(function (req, res) {
-      let project = req.params.project;
+      let projectId = req.body._id;
 
+      if (!projectId) {
+        res.json({ error: 'missing _id' });
+      } else if (projectId) {
+        DB.deleteProjectIssue(projectId, function (err, issue) {
+          if (err) return res.json({ error: 'could not delete', '_id': projectId });
+          console.log("Deleted document:\n", issue);
+          res.json({ result: 'successfully deleted', '_id': projectId });
+        });
+      } else {
+        res.json({
+          error: 'could not delete', '_id': projectId
+        });
+      };
     });
-
 };

@@ -56,7 +56,7 @@ const listProjectIssue = (projectName, done) => {
     ).sort({
         'updated_on': 'asc'
     }).exec(function (err, data) {
-        if (err) return done(err);
+        if (err) return done(err, null);
         done(null, data);
     });
 };
@@ -69,7 +69,7 @@ const listFilteredProjectIssue = (projectDetails, done) => {
     ).sort({
         'updated_on': 'asc'
     }).exec(function (err, data) {
-        if (err) return done(err);
+        if (err) return done(err, null);
         done(null, data);
     });
 };
@@ -77,13 +77,24 @@ const listFilteredProjectIssue = (projectDetails, done) => {
 const updateProjectIssue = (projectId, projectDetails, done) => {
 
     IssueModel.findOneAndUpdate(
-        {'_id': projectId},
-        projectDetails,
-        { _id: 0, project_title: 0, __v: 0, new: true}
-    ).sort({
-        'updated_on': 'asc'
-    }).exec(function (err, data) {
-        if (err) return done(err);
+        { '_id': projectId },
+        projectDetails)
+        .findOneAndUpdate(
+            { '_id': projectId },
+            { $inc: { __v: 1 } },
+            { _id: 0, project_title: 0, __v: 0, new: true })
+        .sort({
+            'updated_on': 'asc'
+        })
+        .exec(function (err, data) {
+            if (err) return done(err, null);
+            done(null, data);
+        });
+};
+
+const deleteProjectIssue = (projectId, done) => {
+    IssueModel.deleteOne({ '_id': projectId }, function (err, data) {
+        if (err) return done(err, null);
         done(null, data);
     });
 };
@@ -95,3 +106,4 @@ exports.createIssue = createIssue;
 exports.listProjectIssue = listProjectIssue;
 exports.listFilteredProjectIssue = listFilteredProjectIssue;
 exports.updateProjectIssue = updateProjectIssue;
+exports.deleteProjectIssue = deleteProjectIssue;
