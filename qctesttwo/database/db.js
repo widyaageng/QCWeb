@@ -52,7 +52,34 @@ const createIssue = (issue, done) => {
 const listProjectIssue = (projectName, done) => {
     IssueModel.find(
         { 'project_title': projectName },
-        { _id: 0, project_title: 0, __v:0}
+        { _id: 0, project_title: 0, __v: 0 }
+    ).sort({
+        'updated_on': 'asc'
+    }).exec(function (err, data) {
+        if (err) return done(err);
+        done(null, data);
+    });
+};
+
+const listFilteredProjectIssue = (projectDetails, done) => {
+
+    IssueModel.find(
+        projectDetails,
+        { _id: 0, project_title: 0, __v: 0 }
+    ).sort({
+        'updated_on': 'asc'
+    }).exec(function (err, data) {
+        if (err) return done(err);
+        done(null, data);
+    });
+};
+
+const updateProjectIssue = (projectId, projectDetails, done) => {
+
+    IssueModel.findOneAndUpdate(
+        {'_id': projectId},
+        projectDetails,
+        { _id: 0, project_title: 0, __v: 0, new: true}
     ).sort({
         'updated_on': 'asc'
     }).exec(function (err, data) {
@@ -66,4 +93,5 @@ exports.mongooseHandler = mongooseHandler;
 exports.IssueModel = IssueModel;
 exports.createIssue = createIssue;
 exports.listProjectIssue = listProjectIssue;
-
+exports.listFilteredProjectIssue = listFilteredProjectIssue;
+exports.updateProjectIssue = updateProjectIssue;
