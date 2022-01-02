@@ -5,10 +5,9 @@ const DB = require('../database/db');
 module.exports = function (app) {
 
   app.route('/api/issues/:project')
-
     .get(function (req, res) {
       let project = req.params.project;
-      let queryFilter = Object.assign({}, req.body);
+      let queryFilter = Object.assign({}, req.query);
 
       queryFilter.project_title = project;
 
@@ -19,21 +18,18 @@ module.exports = function (app) {
           return newFilter;
         }, {});
 
-      console.log(filteredQuery);
-
       DB.listFilteredProjectIssue(filteredQuery, function (err, issueList) {
         if (err) return res.send(err);
         res.json(issueList);
       });
     })
-
     .post(function (req, res) {
       let project = req.params.project;
 
       const requiredFields = ['issue_title', 'issue_text', 'created_by'];
       // const optionalFields = ['assigned_to', 'status_text'];
 
-      let requiredFieldCheck = requiredFields.every(item => Object.keys(req.body).includes(item));
+      let requiredFieldCheck = requiredFields.every(item => Object.keys(req.query).includes(item));
       if (!requiredFieldCheck) {
         res.json({
           error: 'required field(s) missing'
@@ -42,14 +38,26 @@ module.exports = function (app) {
 
         let newEntry = {
           project_title: project,
-          issue_title: req.body.issue_title,
-          issue_text: req.body.issue_text,
-          created_on: (new Date()).toISOString(),
-          updated_on: (new Date()).toISOString(),
-          created_by: req.body.created_by,
-          assigned_to: req.body.assigned_to == undefined ? '' : req.body.assigned_to,
-          open: true,
-          status_text: req.body.status_text == undefined ? '' : req.body.status_text
+          issue_title: req.query.issue_title,
+          issue_text: req.query.issue_text,
+          created_on: (() => {
+            try {
+              return (new Date(req.query.created_on)).toISOString();
+            } catch (error) {
+              return (new Date()).toISOString();
+            }
+          })(),
+          updated_on: (() => {
+            try {
+              return (new Date(req.query.updated_on)).toISOString();
+            } catch (error) {
+              return (new Date()).toISOString();
+            }
+          })(),
+          created_by: req.query.created_by,
+          assigned_to: req.query.assigned_to == undefined ? '' : req.query.assigned_to,
+          open: req.query.open == undefined ? true : req.query.open,
+          status_text: req.query.status_text == undefined ? '' : req.query.status_text
         };
 
         DB.createIssue(newEntry, function (err, issue) {
@@ -69,29 +77,29 @@ module.exports = function (app) {
         });
       };
     })
-
     .put(function (req, res) {
       let project = req.params.project;
-      let projectProps = Object.keys(req.body);
-
+      // console.log(req.query);
+      let projectProps = Object.keys(req.query);
       let schemaProps = Object.keys(DB.IssueModel.schema.paths);
 
       if (!projectProps.includes('_id')) {
         res.json({
           error: 'missing _id'
         });
-      } else if (req.body._id == '') {
+      } else if (req.query._id == '') {
         res.json({
           error: 'missing _id'
         });
       } else if (projectProps.length == 1) {
         res.json({
-          error: 'no update field(s) sent', '_id': req.body._id
-        })
+          error: 'no update field(s) sent',
+          '_id': req.query._id
+        });
       } else if (projectProps.every(item => schemaProps.includes(item))) {
 
-        let projectId = req.body._id;
-        let issueUpdates = Object.assign({}, req.body);
+        let projectId = req.query._id;
+        let issueUpdates = Object.assign({}, req.query);
         issueUpdates.project_title = project;
 
         if (issueUpdates.created_on == undefined || issueUpdates.created_on == '') {
@@ -105,21 +113,21 @@ module.exports = function (app) {
 
         DB.updateProjectIssue(projectId, issueUpdates, function (err, issue) {
           if (err) return res.send(err);
-          console.log("Record update :\n", issue);
+          console.log(issue ? ("Record update :\n", issue): "null record updated");
           if (issue) {
             res.json({ result: 'successfully updated', '_id': projectId });
           } else {
-            res.json({ error: 'could not update', '_id': req.body._id });
+            res.json({ error: 'could not update', '_id': req.query._id });
           }
         });
       } else {
         res.json({
-          error: 'could not update', '_id': req.body._id
+          error: 'could not update', '_id': req.query._id
         });
       };
     })
     .delete(function (req, res) {
-      let projectId = req.body._id;
+      let projectId = req.query._id;
 
       if (!projectId) {
         res.json({ error: 'missing _id' });
@@ -127,11 +135,15 @@ module.exports = function (app) {
         DB.deleteProjectIssue(projectId, function (err, issue) {
           if (err) return res.json({ error: 'could not delete', '_id': projectId });
           console.log("Deleted document:\n", issue);
-          res.json({ result: 'successfully deleted', '_id': projectId });
+          if (issue.deletedCount > 0) {
+            res.json({ result: 'successfully deleted', '_id': projectId });
+          } else {
+            res.json({ error: 'could not delete', '_id': projectId });
+          };
         });
       } else {
         res.json({
-          error: 'could not delete', '_id': projectId
+          
         });
       };
     });
