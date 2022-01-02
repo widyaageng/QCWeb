@@ -13,12 +13,12 @@
 * [X] ~~*View issues on a project with one filter: GET request to /api/issues/{project}*~~ [2022-01-02]
 * [X] ~~*View issues on a project with multiple filters: GET request to /api/issues/{project}*~~ [2022-01-02]
 
-* [ ] Update one field on an issue: PUT request to /api/issues/{project}
-* [ ] Update multiple fields on an issue: PUT request to /api/issues/{project}
-* [ ] Update an issue with missing _id: PUT request to /api/issues/{project}
-* [ ] Update an issue with no fields to update: PUT request to /api/issues/{project}
-* [ ] Update an issue with an invalid _id: PUT request to /api/issues/{project}
+* [X] ~~*Update one field on an issue: PUT request to /api/issues/{project}*~~ [2022-01-02]
+* [X] ~~*Update multiple fields on an issue: PUT request to /api/issues/{project}*~~ [2022-01-02]
+* [X] ~~*Update an issue with missing _id: PUT request to /api/issues/{project}*~~ [2022-01-02]
+* [X] ~~*Update an issue with no fields to update: PUT request to /api/issues/{project}*~~ [2022-01-02]
+* [X] ~~*Update an issue with an invalid _id: PUT request to /api/issues/{project}*~~ [2022-01-02]
 
-* [ ] Delete an issue: DELETE request to /api/issues/{project}
-* [ ] Delete an issue with an invalid _id: DELETE request to /api/issues/{project}
-* [ ] Delete an issue with missing _id: DELETE request to /api/issues/{project}
+* [X] ~~*Delete an issue: DELETE request to /api/issues/{project}*~~ [2022-01-02]
+* [X] ~~*Delete an issue with an invalid _id: DELETE request to /api/issues/{project}*~~ [2022-01-02]
+* [X] ~~*Delete an issue with missing _id: DELETE request to /api/issues/{project}*~~ [2022-01-02]
