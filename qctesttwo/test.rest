@@ -40,14 +40,9 @@ open=true
 &created_by=adminsolo
 &issue_title=
 ################################
-PUT http://localhost:3000/api/issues/projectb?
+PUT http://localhost:3000/api/issues/projectb?_id=61cf18fce89070c5c5959d5c&created_by=adminquatro
 Content-Type: application/x-www-form-urlencoded
 
-_id=61cf18fce89070c5c5959d5c
-&created_by=adminquatro
-&created_on=2021-12-25
-&open=false
-&status_text=Finally%20it%20works%20bois%2C%20ggwp
 ################################
 DELETE http://localhost:3000/api/issues/projectb?
 Content-Type: application/x-www-form-urlencoded
@@ -57,4 +52,11 @@ _id=61cf18fce89070c5c5959d5c
 GET http://localhost:3000/api/issues/projectb
 Content-Type: application/x-www-form-urlencoded
 
+################################
+PUT http://localhost:3000/api/issues/testproject?_id=61d18f7ff262ce5788ab8f9f
+Content-Type: application/x-www-form-urlencoded
+
+################################
+PUT http://localhost:3000/api/issues/testproject?_id=61d18f7ff262ce5fffffffff&open=false&status_text=Under+QA+check
+Content-Type: application/x-www-form-urlencoded
 ################################
