@@ -1,62 +1,32 @@
-POST http://localhost:3000/api/issues/projectb?
-Content-Type: application/x-www-form-urlencoded
+POST http://localhost:3000/api/issues/fcc-project
+Content-Type: application/json; charset=utf-8
 
-issue_title=Issue%231
-&issue_text=It%20doesnt%20work%20still
-&created_by=adminsolo
-
+{
+    "issue_title": "Faux Issue Title",
+    "issue_text": "Functional Test - Required Fields Only",
+    "created_by": "fCC"
+}
 ################################
-POST http://localhost:3000/api/issues/projectb?
-Content-Type: application/x-www-form-urlencoded
+POST http://localhost:3000/api/issues/fcc-project
+Content-Type: application/json; charset=utf-8
 
-issue_title=Issue%232
-&issue_text=It%20doesnt%20work%20still%202
-&created_by=adminsolo
-
+{
+    "project_title": "testproject",
+    "issue_title": "Test POST successful?",
+    "issue_text": "Is it going to pass though or fail?",
+    "created_by": "TestGuy",
+    "assigned_to": "SolverGuy",
+    "open": true,
+    "status_text": "Under QA check",
+}
 ################################
-POST http://localhost:3000/api/issues/projectb?
-Content-Type: application/x-www-form-urlencoded
+POST http://localhost:3000/api/issues/fcc-project
+Content-Type: application/json; charset=utf-8
 
-issue_title=Issue%233
-&issue_text=It%20doesnt%20work%20still%203
-&created_by=admintrio
-
-################################
-POST http://localhost:3000/api/issues/projectb?
-Content-Type: application/x-www-form-urlencoded
-
-issue_title=Issue%234
-&issue_text=It%20doesnt%20work%20still%204
-
-################################
-GET http://localhost:3000/api/issues/projectb
-Content-Type: application/x-www-form-urlencoded
-
-################################
-GET http://localhost:3000/api/issues/projectb?
-Content-Type: application/x-www-form-urlencoded
-
-open=true
-&created_by=adminsolo
-&issue_title=
-################################
-PUT http://localhost:3000/api/issues/projectb?_id=61cf18fce89070c5c5959d5c&created_by=adminquatro
-Content-Type: application/x-www-form-urlencoded
-
-################################
-DELETE http://localhost:3000/api/issues/projectb?
-Content-Type: application/x-www-form-urlencoded
-
-_id=61cf18fce89070c5c5959d5c
-################################
-GET http://localhost:3000/api/issues/projectb
-Content-Type: application/x-www-form-urlencoded
-
-################################
-PUT http://localhost:3000/api/issues/testproject?_id=61d18f7ff262ce5788ab8f9f
-Content-Type: application/x-www-form-urlencoded
-
-################################
-PUT http://localhost:3000/api/issues/testproject?_id=61d18f7ff262ce5fffffffff&open=false&status_text=Under+QA+check
-Content-Type: application/x-www-form-urlencoded
+{
+    "project_title": "testproject",
+    "issue_title": "Test POST ok?",
+    "issue_text": "Is it going to suck big time?",
+    "created_by": "TestDude"
+}
 ################################

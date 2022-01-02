@@ -3,9 +3,10 @@ require('dotenv').config();
 // -------------------- Database setup --------------------
 var mongooseHandler = require('mongoose');
 const uri = process.env.MONGO_URI;
+const localuri = 'mongodb://localhost:27017/test';
 
 (async function () {
-    await mongooseHandler.connect('mongodb://localhost:27017/test', {
+    await mongooseHandler.connect(uri, {
         useUnifiedTopology: true,
         useNewUrlParser: true
     }).then(console.log("Database connected!"));
@@ -65,7 +66,7 @@ const listFilteredProjectIssue = (projectDetails, done) => {
 
     IssueModel.find(
         projectDetails,
-        { _id: 0, project_title: 0, __v: 0 }
+        { project_title: 0, __v: 0 }
     ).sort({
         'updated_on': 'asc'
     }).exec(function (err, data) {

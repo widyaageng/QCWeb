@@ -30,11 +30,10 @@ suite('Functional Tests', function () {
             status_text: "Under QA check",
         };
 
-        const urlParams = new URLSearchParams(issueEntry);
-
         chai
             .request(server)
-            .post(`/api/issues/${projectId}?${urlParams}`)
+            .post(`/api/issues/${projectId}`)
+            .send(issueEntry)
             .end(function (err, res) {
                 assert.equal(res.status, 200);
                 assert.equal(res.body.issue_title, issueEntry.issue_title);
@@ -54,12 +53,11 @@ suite('Functional Tests', function () {
             issue_text: "Is it going to suck big time?",
             created_by: "TestDude"
         };
-
-        const urlParams = new URLSearchParams(issueEntry);
-
+        
         chai
             .request(server)
-            .post(`/api/issues/${projectId}?${urlParams}`)
+            .post(`/api/issues/${projectId}`)
+            .send(issueEntry)
             .end(function (err, res) {
                 assert.equal(res.status, 200);
                 assert.equal(res.body.issue_title, issueEntry.issue_title);
@@ -76,11 +74,10 @@ suite('Functional Tests', function () {
             issue_text: "Is it going be error?",
         };
 
-        const urlParams = new URLSearchParams(issueEntry);
-
         chai
             .request(server)
-            .post(`/api/issues/${projectId}?${urlParams}`)
+            .post(`/api/issues/${projectId}`)
+            .send(issueEntry)
             .end(function (err, res) {
                 assert.equal(res.status, 200);
                 assert.equal(res.body.error, 'required field(s) missing');
@@ -105,11 +102,10 @@ suite('Functional Tests', function () {
             created_by: "TestDude"
         };
 
-        const urlParams = new URLSearchParams(issueQuery);
-
         chai
             .request(server)
-            .get(`/api/issues/${projectId}?${urlParams}`)
+            .get(`/api/issues/${projectId}`)
+            .query(issueQuery)
             .end(function (err, res) {
                 assert.equal(res.status, 200);
                 assert.isArray(res.body, "array is not returned: not ok!");
@@ -128,11 +124,10 @@ suite('Functional Tests', function () {
             open: false,
         };
 
-        const urlParams = new URLSearchParams(issueEntry);
-
         chai
             .request(server)
-            .post(`/api/issues/${projectId}?${urlParams}`)
+            .post(`/api/issues/${projectId}`)
+            .send(issueEntry)
             .end(function (err, res) {
                 assert.equal(res.status, 200);
                 assert.equal(res.body.issue_title, issueEntry.issue_title);
@@ -159,11 +154,10 @@ suite('Functional Tests', function () {
             open: false
         };
 
-        const urlQueryParams = new URLSearchParams(issueQuery);
-
         chai
             .request(server)
-            .get(`/api/issues/${projectId}?${urlQueryParams}`)
+            .get(`/api/issues/${projectId}`)
+            .query(issueQuery)
             .end(function (err, res) {
                 assert.equal(res.status, 200);
                 assert.isArray(res.body, "array is not returned: not ok!");
@@ -185,7 +179,8 @@ suite('Functional Tests', function () {
 
                 chai
                     .request(server)
-                    .put(`/api/issues/${projectId}?${urlUpdateParams}`)
+                    .put(`/api/issues/${projectId}`)
+                    .send(issueUpdate)
                     .end(function (err, res) {
                         // console.log(res);
                         assert.equal(res.status, 200);
@@ -205,11 +200,11 @@ suite('Functional Tests', function () {
                 issueUpdate._id = String(issueUpdate._id);
                 issueUpdate.open = false;
                 issueUpdate.assigned_to = "Widya";
-                let urlUpdateParams = new URLSearchParams(issueUpdate);
 
                 chai
                     .request(server)
-                    .put(`/api/issues/${projectId}?${urlUpdateParams}`)
+                    .put(`/api/issues/${projectId}`)
+                    .send(issueUpdate)
                     .end(function (err, res) {
                         assert.equal(res.status, 200);
                         assert.equal(res.body.result, 'successfully updated');
@@ -228,11 +223,11 @@ suite('Functional Tests', function () {
                 issueUpdate._id = '';
                 issueUpdate.open = false;
                 issueUpdate.assigned_to = "Widya";
-                let urlUpdateParams = new URLSearchParams(issueUpdate);
 
                 chai
                     .request(server)
-                    .put(`/api/issues/${projectId}?${urlUpdateParams}`)
+                    .put(`/api/issues/${projectId}`)
+                    .send(issueUpdate)
                     .end(function (err, res) {
                         assert.equal(res.status, 200);
                         assert.equal(res.body.error, 'missing _id');
@@ -254,11 +249,10 @@ suite('Functional Tests', function () {
                     };
                 });
 
-                let urlUpdateParams = new URLSearchParams(issueUpdate);
-
                 chai
                     .request(server)
-                    .put(`/api/issues/${projectId}?${urlUpdateParams}`)
+                    .put(`/api/issues/${projectId}`)
+                    .send(issueUpdate)
                     .end(function (err, res) {
                         assert.equal(res.status, 200);
                         assert.equal(res.body.error, 'no update field(s) sent');
@@ -274,11 +268,10 @@ suite('Functional Tests', function () {
             status_text: "Under QA check",
         };
 
-        let urlUpdateParams = new URLSearchParams(issueUpdate);
-
         chai
             .request(server)
-            .put(`/api/issues/${projectId}?${urlUpdateParams}`)
+            .put(`/api/issues/${projectId}`)
+            .send(issueUpdate)
             .end(function (err, res) {
                 assert.equal(res.status, 200);
                 assert.equal(res.body.error, 'could not update');
@@ -299,7 +292,8 @@ suite('Functional Tests', function () {
 
                 chai
                     .request(server)
-                    .delete(`/api/issues/${projectId}?${urlUpdateParams}`)
+                    .delete(`/api/issues/${projectId}`)
+                    .send(issueUpdate)
                     .end(function (err, res) {
                         assert.equal(res.status, 200);
                         assert.equal(res.body.result, 'successfully deleted');
@@ -324,11 +318,10 @@ suite('Functional Tests', function () {
                     };
                 });
 
-                let urlUpdateParams = new URLSearchParams(issueUpdate);
-
                 chai
                     .request(server)
-                    .delete(`/api/issues/${projectId}?${urlUpdateParams}`)
+                    .delete(`/api/issues/${projectId}`)
+                    .send(issueUpdate)
                     .end(function (err, res) {
                         assert.equal(res.status, 200);
                         assert.equal(res.body.error, 'could not delete');
@@ -343,11 +336,10 @@ suite('Functional Tests', function () {
             _id: ''
         };
 
-        let urlUpdateParams = new URLSearchParams(issueUpdate);
-
         chai
             .request(server)
-            .delete(`/api/issues/${projectId}?${urlUpdateParams}`)
+            .delete(`/api/issues/${projectId}`)
+            .send(issueUpdate)
             .end(function (err, res) {
                 assert.equal(res.status, 200);
                 assert.equal(res.body.error, 'missing _id');
