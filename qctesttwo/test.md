@@ -1,9 +1,9 @@
 * [X] ~~*Complete the necessary routes in /routes/api.js*~~ [2021-12-31]
-* [ ] Create all of the functional tests in tests/2_functional-tests.js
+* [X] Create all of the functional tests in tests/2_functional-tests.js
 * [X] ~~*Copy the sample.env file to .env and set the variables appropriately*~~ [2021-12-31]
 * [X] ~~*To run the tests uncomment NODE_ENV=test in your .env file*~~ [2021-12-31]
 * [X] ~~*To run the tests in the console, use the command npm run test. To open the Replit console, press Ctrl+Shift+P (Cmd if on a Mac) and type "open shell"*~~ [2021-12-31]
-* [ ] Write the following tests in tests/2_functional-tests.js:
+* [X] Write the following tests in tests/2_functional-tests.js:
 
 * [X] ~~*Create an issue with every field: POST request to /api/issues/{project}*~~ [2022-01-02]
 * [X] ~~*Create an issue with only required fields: POST request to /api/issues/{project}*~~ [2022-01-02]
