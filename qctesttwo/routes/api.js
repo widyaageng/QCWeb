@@ -79,7 +79,6 @@ module.exports = function (app) {
     })
     .put(function (req, res) {
       let project = req.params.project;
-      // console.log(req.query);
       let projectProps = Object.keys(req.query);
       let schemaProps = Object.keys(DB.IssueModel.schema.paths);
 
