@@ -11,10 +11,18 @@ const runner            = require('./test-runner');
 
 const app = express();
 
+// ---------------- custom middlewares ----------------
+//app logger
+function appLogger(req, res, next) {
+  console.log(`${req.method} ${req.path} - ${req.ip}`);
+  next();
+}
+// ---------------- end of custom middlewares ----------------
+
 app.use('/public', express.static(process.cwd() + '/public'));
 
 app.use(cors({origin: '*'})); //USED FOR FCC TESTING PURPOSES ONLY!
-
+app.use(appLogger);
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 

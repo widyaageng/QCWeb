@@ -1,0 +1,64 @@
+POST http://localhost:3000/api/books
+Content-Type: application/json; charset=utf-8
+
+{
+    "title": "Calculus I"
+}
+################################
+POST http://localhost:3000/api/books
+Content-Type: application/json; charset=utf-8
+
+{
+    "title": "Calculus II"
+}
+################################
+POST http://localhost:3000/api/books
+Content-Type: application/json; charset=utf-8
+
+{
+    "title": "Calculus III"
+}
+################################
+GET http://localhost:3000/api/books
+
+################################
+GET http://localhost:3000/api/books/61d310a76e61b1d97db9ffff
+
+################################
+GET http://localhost:3000/api/books/61d317ac9a0c198c97ea82e1
+
+################################
+POST http://localhost:3000/api/books/61d317ac9a0c198c97ea82e1
+Content-Type: application/json; charset=utf-8
+
+{
+    "comment": "Headache bro!"
+}
+################################
+POST http://localhost:3000/api/books/61d317ac9a0c198c97ea82e1
+Content-Type: application/json; charset=utf-8
+
+{
+    "comment": "Eazy peazy lemon squeezy"
+}
+################################
+POST http://localhost:3000/api/books/61d317ac9a0c198c97ea82e1
+Content-Type: application/json; charset=utf-8
+
+################################
+POST http://localhost:3000/api/books/61d310a76e61b1d97db9ffff
+Content-Type: application/json; charset=utf-8
+
+{
+    "comment": "Never Seen Comment"
+}
+################################
+DELETE http://localhost:3000/api/books
+
+################################
+DELETE http://localhost:3000/api/books/61d317ac9a0c198c97ea82e1
+
+################################
+DELETE http://localhost:3000/api/books/61d310a76e61b1d97db9ffff
+
+################################
