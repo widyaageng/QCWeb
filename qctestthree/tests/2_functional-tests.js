@@ -118,8 +118,8 @@ suite('Functional Tests', function () {
                 assert.property(book, 'title');
                 assert.isString(book.title);
                 assert.property(book, '_id');
-                assert.property(book, 'commentCount');
-                assert.isNumber(book.commentCount);
+                assert.property(book, 'commentcount');
+                assert.isNumber(book.commentcount);
               });
               done();
             });

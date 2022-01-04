@@ -6,7 +6,7 @@ const uri = process.env.MONGO_URI;
 const localuri = 'mongodb://localhost:27017/test';
 
 (async function () {
-    await mongooseHandler.connect(localuri, {
+    await mongooseHandler.connect(uri, {
         useUnifiedTopology: true,
         useNewUrlParser: true
     }).then(console.log("Database connected!"));
@@ -17,7 +17,7 @@ const { Schema } = mongooseHandler;
 
 const bookSchema = new Schema({
     title: String,
-    commentCount: Number,
+    commentcount: Number,
     comments: [String]
 });
 
@@ -26,7 +26,7 @@ let BookModel = mongooseHandler.model('Book', bookSchema);
 const createBook = (book, done) => {
     let bookEntry = {
         title: book.title,
-        commentCount: book.commentCount == undefined || book.commentCount == '' ? 0 : book.commentCount,
+        commentcount: book.commentcount == undefined || book.commentcount == '' ? 0 : book.commentcount,
         comments: book.comments == undefined || book.comments == '' ? [] : book.comments
     };
 
@@ -52,7 +52,7 @@ const listBooks = (bookId, done) => {
     } else {
         BookModel.find(
             { '_id': bookId },
-            { commentCount: 0, __v: 0 }
+            { commentcount: 0, __v: 0 }
         ).sort({
             'title': 'asc'
         }).exec(function (err, data) {
