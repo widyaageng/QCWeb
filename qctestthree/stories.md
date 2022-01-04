@@ -1,4 +1,4 @@
-* [ ] You can provide your own project, not the example URL.
+* [X] ~~*You can provide your own project, not the example URL.*~~ [2022-01-04]
 
 * [X] ~~*You can send a POST request to /api/books with title as part of the form data to add a book. The returned response will be an object with the title and a unique _id as keys. If title is not included in the request, the returned response should be the string missing required field title.*~~ [2022-01-03]
 
@@ -12,4 +12,4 @@
 
 * [X] ~~*You can send a DELETE request to /api/books to delete all books in the database. The returned response will be the string 'complete delete successful if successful.*~~ [2022-01-03]
 
-* [ ] All 10 functional tests required are complete and passing.
+* [X] ~~*All 10 functional tests required are complete and passing.*~~ [2022-01-04]
