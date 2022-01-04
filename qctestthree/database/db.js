@@ -6,7 +6,7 @@ const uri = process.env.MONGO_URI;
 const localuri = 'mongodb://localhost:27017/test';
 
 (async function () {
-    await mongooseHandler.connect(uri, {
+    await mongooseHandler.connect(localuri, {
         useUnifiedTopology: true,
         useNewUrlParser: true
     }).then(console.log("Database connected!"));

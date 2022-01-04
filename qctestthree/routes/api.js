@@ -32,7 +32,7 @@ module.exports = function (app) {
       let title = req.body.title;
       //response will contain new book object including atleast _id and title
 
-      if (!title || title == '') {
+      if (title == undefined || title == '') {
         res.send('missing required field title');
       } else {
         DB.createBook({ title: title }, function (err, book) {
@@ -80,7 +80,7 @@ module.exports = function (app) {
       //json res format same as .get
 
       if (comment == undefined || comment == '') {
-        res.send('missing required fied comment');
+        res.send('missing required field comment');
       } else {
         DB.updateBook(bookId, comment, function (err, book) {
           if (err) return res.send(err);
