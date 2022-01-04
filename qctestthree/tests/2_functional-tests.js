@@ -96,8 +96,8 @@ suite('Functional Tests', function () {
         ];
 
         (new Promise((resolve, reject) => {
-          booksToPost.forEach((book) => {
-            chai
+          booksToPost.forEach(async (book) => {
+            await chai
               .request(server)
               .post(`/api/books`)
               .send(book)
