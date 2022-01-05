@@ -8,7 +8,7 @@ class SudokuSolver {
   }
 
   checkRowPlacement(puzzleString, row, column, value) {
-    return !puzzleString.slice(row * 9, (row + 1) * 9).includes(value);
+    return !puzzleString.slice(row * 9, (row + 1) * 9).includes(String(value));
   }
 
   checkColPlacement(puzzleString, row, column, value) {
@@ -16,7 +16,7 @@ class SudokuSolver {
       .filter(([index, _]) => index % 9 == column)
       .map(item => item[1]);
 
-    return !colString.includes(value);
+    return !colString.includes(String(value));
   }
 
   checkRegionPlacement(puzzleString, row, column, value) {
