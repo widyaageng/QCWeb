@@ -14,7 +14,7 @@ class SudokuSolver {
   checkColPlacement(puzzleString, row, column, value) {
     let colString = Object.entries(puzzleString)
       .filter(([index, _]) => index % 9 == column)
-      .map(item => item[1]);
+      .map(item => item[0]);
 
     return !colString.includes(String(value));
   }
@@ -24,7 +24,7 @@ class SudokuSolver {
   }
 
   solve(puzzleString) {
-
+    
   }
 }
 
