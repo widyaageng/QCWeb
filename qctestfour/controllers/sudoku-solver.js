@@ -16,7 +16,7 @@ class SudokuSolver {
   checkColPlacement(puzzleString, row, column, value) {
     let colString = Object.entries(puzzleString)
       .filter(([index, _]) => index % 9 == column)
-      .map(item => item[0]);
+      .map(([index, item]) => item);
 
     return !colString.includes(String(value));
   }
@@ -56,6 +56,7 @@ class SudokuSolver {
     let puzzle = puzzleString
     let backtrack = false;
 
+    const visited = [...Array(81).keys()].map(item => false);
     const symbols = [...Array(9).keys()].map(item => String(item + 1));
 
     for (let index = 0; index < puzzle.length; index++) {
@@ -75,10 +76,16 @@ class SudokuSolver {
           if (checkrow && checkcolumn && checkregion) {
             puzzle = puzzle.slice(0, index) + symbols[i] + puzzle.slice(index + 1);
             backtrack = false;
+            visited[index] = true;
             break;
           } else {
             if (i == 8) {
-              index = index - 2;
+              if (visited[index]) {
+                index = index - 3;
+                visited[index] = false;
+              } else {
+                index = index - 2;
+              }
               backtrack = true;
             }
           }
@@ -86,19 +93,23 @@ class SudokuSolver {
       } else {
         if (puzzleString[index] == '.') {
 
-          for (let i = parseInt(puzzle[index]) - 1 ; i < 9 ; i++) {
+          for (let i = parseInt(puzzle[index]) % 9 ; i < 9 ; i++) {
             let checkrow = this.checkRowPlacement(puzzle, row, column, symbols[i]);
             let checkcolumn = this.checkColPlacement(puzzle, row, column, symbols[i]);
             let checkregion = this.checkRegionPlacement(puzzle, row, column, symbols[i]);
   
             if (checkrow && checkcolumn && checkregion) {
               puzzle = puzzle.slice(0, index) + symbols[i] + puzzle.slice(index + 1);
+              visited[index] = true;
               backtrack = false;
               break;
             } else {
               if (i == 8) {
                 puzzle = puzzle.slice(0, index) + '.' + puzzle.slice(index + 1);
-                index = index - 2;
+                if (visited[index]) {
+                  index = index - 2;
+                  visited[index] = false;
+                }
                 backtrack = true;
               }
             }
@@ -106,7 +117,7 @@ class SudokuSolver {
         } else {
           if (backtrack) {
             index = index - 2;
-            backtrack = false;
+            backtrack = true;
           }
         }
       }
