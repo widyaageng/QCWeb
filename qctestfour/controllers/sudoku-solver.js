@@ -25,9 +25,12 @@ class SudokuSolver {
 
   validate(puzzleString) {
     let lengthCheck = puzzleString.length === 81;
-    let regexCheck = (new RegExp(/^[\d\.]{81}$/).test(puzzleString));
+    let regexCheck = (new RegExp(/^[\d\.]+$/).test(puzzleString));
 
-    return lengthCheck && regexCheck;
+    return ({
+      lengthOK: lengthCheck,
+      charOK: regexCheck,
+    });
   }
 
   checkRowPlacement(puzzleString, row, column, value) {
@@ -74,8 +77,16 @@ class SudokuSolver {
 
   solve(puzzleString) {
 
-    if (!this.validate(puzzleString)) {
-      return '';
+    let stringCheck = this.validate(puzzleString);
+
+    if (stringCheck.lengthOK && stringCheck.charOK) {
+    
+    } else if (stringCheck.charOK) {
+      return 'invalid length';
+    } else if (stringCheck.lengthOK) {
+      return 'contain invalid char';
+    } else {
+      return 'invalid length and contain invalid char';
     }
 
     this.updateInitOptions(puzzleString);
@@ -163,7 +174,11 @@ class SudokuSolver {
       }
     }
 
-    return puzzle;
+    if (puzzle == puzzleString) {
+      return 'cannot be solved';
+    } else {
+      return puzzle;
+    }
   }
 }
 

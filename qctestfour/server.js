@@ -9,11 +9,18 @@ const apiRoutes         = require('./routes/api.js');
 const runner            = require('./test-runner');
 
 const app = express();
+// ---------------- custom middlewares ----------------
+//app logger
+function appLogger(req, res, next) {
+  console.log(`${req.method} ${req.path} - ${req.ip}`);
+  next();
+}
+// ---------------- end of custom middlewares ----------------
 
 app.use('/public', express.static(process.cwd() + '/public'));
 app.use(cors({origin: '*'})); //For FCC testing purposes only
-
 app.use(bodyParser.json());
+app.use(appLogger);
 app.use(bodyParser.urlencoded({ extended: true }));
 
 //Index page (static HTML)
