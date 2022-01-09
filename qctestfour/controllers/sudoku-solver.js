@@ -1,6 +1,34 @@
 const pz = require('./puzzle-strings');
 
+const plotSudoku = (stringInput) => {
+  for (let i = 0; i < 81; i = i + 9) {
+    console.log(stringInput.slice(i, i + 9).split('').join('\t'));
+    console.log("\n");
+  }
+}
+
 class SudokuSolver {
+
+  constructor() {
+    this.puzzleOptions = {};
+    // this.puzzleOptions = () => {
+    //   let retStatus = {}
+    //   for (let i = 0; i < 81; i++) {
+    //     retStatus[i] = [...Array(9).keys()].map(item => item + 1);
+    //   }
+    //   return retStatus;
+    // }
+  }
+
+  updateInitOptions(puzzleString) {
+    for (let i = 0; i < 81; i++) {
+      if (puzzleString[i] !== ".") {
+        this.puzzleOptions[i] = [puzzleString[i]];
+      } else {
+        this.puzzleOptions[i] = [...Array(9).keys()].map(item => item + 1);
+      }
+    }
+  }
 
   validate(puzzleString) {
     let lengthCheck = puzzleString.length === 81;
@@ -22,18 +50,18 @@ class SudokuSolver {
   }
 
   checkRegionPlacement(puzzleString, row, column, value) {
-    let rowRegion = Math.floor(row/3);
-    let colRegion = Math.floor(column/3);
+    let rowRegion = Math.floor(row / 3);
+    let colRegion = Math.floor(column / 3);
 
     let regionIndices = [];
-    
-    for (let i = rowRegion*3; i < (rowRegion+1)*3; i++) {
-      for (let j = colRegion*3; j < (colRegion + 1)*3; j++) {
 
-        regionIndices.push(i*9 + j);
+    for (let i = rowRegion * 3; i < (rowRegion + 1) * 3; i++) {
+      for (let j = colRegion * 3; j < (colRegion + 1) * 3; j++) {
+
+        regionIndices.push(i * 9 + j);
 
         // Returning false for coordinate out of sudoku box
-        if (i*9 + j > 80) {
+        if (i * 9 + j > 80) {
           return false;
         };
       };
@@ -44,7 +72,7 @@ class SudokuSolver {
   }
 
   getrow(index) {
-    return Math.floor(index/9);
+    return Math.floor(index / 9);
   }
 
   getcolumn(index) {
@@ -53,82 +81,94 @@ class SudokuSolver {
 
   solve(puzzleString) {
 
+    this.updateInitOptions(puzzleString);
+
     let puzzle = puzzleString
     let backtrack = false;
 
     const visited = [...Array(81).keys()].map(item => false);
     const symbols = [...Array(9).keys()].map(item => String(item + 1));
 
-    for (let index = 0; index < puzzle.length; index++) {
-      console.log(puzzle);
-      console.log(pz.puzzlesAndSolutions[4][0]);
-      console.log(pz.puzzlesAndSolutions[4][1]);
-      console.log('--------------------------------------------------------');
-      let row = this.getrow(index);
-      let column = this.getcolumn(index);
+    for (let i = 0; i < puzzle.length; i++) {
+      // console.log(puzzle);
+      let row = this.getrow(i);
+      let column = this.getcolumn(i);
 
-      if (puzzle[index] == '.') {
-        for (let i = 0; i < 9; i++) {
-          let checkrow = this.checkRowPlacement(puzzle, row, column, symbols[i]);
-          let checkcolumn = this.checkColPlacement(puzzle, row, column, symbols[i]);
-          let checkregion = this.checkRegionPlacement(puzzle, row, column, symbols[i]);
+      if (puzzle[i] == '.') {
+        if (this.puzzleOptions[i].length < 1) {
+          visited[i] = false;
+          this.puzzleOptions[i] = [...Array(9).keys()].map(item => item + 1);
+          i = puzzle.length - Object.assign([], visited).reverse().indexOf(true) - 2;
+          continue;
+        }
+
+        for (const [index, item] of Object.entries(this.puzzleOptions[i])) {
+          let checkrow = this.checkRowPlacement(puzzle, row, column, item);
+          let checkcolumn = this.checkColPlacement(puzzle, row, column, item);
+          let checkregion = this.checkRegionPlacement(puzzle, row, column, item);
 
           if (checkrow && checkcolumn && checkregion) {
-            puzzle = puzzle.slice(0, index) + symbols[i] + puzzle.slice(index + 1);
+            puzzle = puzzle.slice(0, i) + item + puzzle.slice(i + 1);
+            this.puzzleOptions[i] = [...this.puzzleOptions[i].slice(parseInt(index) + 1)];
             backtrack = false;
-            visited[index] = true;
+            visited[i] = true;
             break;
           } else {
-            if (i == 8) {
-              if (visited[index]) {
-                index = index - 3;
-                visited[index] = false;
-              } else {
-                index = index - 2;
+            if (item == 9) {
+              visited[i] = false;
+              i = puzzle.length - Object.assign([], visited).reverse().indexOf(true) - 2;
+              if (!backtrack) {
+                backtrack = true;
               }
-              backtrack = true;
             }
           }
         }
       } else {
-        if (puzzleString[index] == '.') {
+        if (puzzleString[i] == '.') {
 
-          for (let i = parseInt(puzzle[index]) % 9 ; i < 9 ; i++) {
-            let checkrow = this.checkRowPlacement(puzzle, row, column, symbols[i]);
-            let checkcolumn = this.checkColPlacement(puzzle, row, column, symbols[i]);
-            let checkregion = this.checkRegionPlacement(puzzle, row, column, symbols[i]);
-  
+          if (backtrack) {
+            puzzle = puzzle.slice(0, i) + '.' + puzzle.slice(i + 1);
+          }
+
+          if (this.puzzleOptions[i].length < 1) {
+            this.puzzleOptions[i] = [...Array(9).keys()].map(item => item + 1);
+            visited[i] = false;
+            i -= 2;
+            continue;
+          }
+
+          for (const [index, item] of Object.entries(this.puzzleOptions[i])) {
+            let checkrow = this.checkRowPlacement(puzzle, row, column, item);
+            let checkcolumn = this.checkColPlacement(puzzle, row, column, item);
+            let checkregion = this.checkRegionPlacement(puzzle, row, column, item);
+
             if (checkrow && checkcolumn && checkregion) {
-              puzzle = puzzle.slice(0, index) + symbols[i] + puzzle.slice(index + 1);
-              visited[index] = true;
+              puzzle = puzzle.slice(0, i) + item + puzzle.slice(i + 1);
+              this.puzzleOptions[i] = [...this.puzzleOptions[i].slice(parseInt(index) + 1)];
+              visited[i] = true;
               backtrack = false;
               break;
             } else {
-              if (i == 8) {
-                puzzle = puzzle.slice(0, index) + '.' + puzzle.slice(index + 1);
-                if (visited[index]) {
-                  index = index - 2;
-                  visited[index] = false;
-                }
+              if (item == 9) {
+                puzzle = puzzle.slice(0, i) + '.' + puzzle.slice(i + 1);
+                visited[i] = false;
+                this.puzzleOptions[i] = [...Array(9).keys()].map(item => item + 1);
+                i = puzzle.length - Object.assign([], visited).reverse().indexOf(true) - 2;
                 backtrack = true;
               }
             }
           }
         } else {
           if (backtrack) {
-            index = index - 2;
-            backtrack = true;
+            i = puzzle.length - Object.assign([], visited).reverse().indexOf(true) - 2;
           }
         }
       }
     }
 
-    return puzzleString;
+    return puzzle;
   }
 }
-
-let newSudoku = new SudokuSolver();
-newSudoku.solve(pz.puzzlesAndSolutions[4][0]);
 
 module.exports = SudokuSolver;
 
