@@ -1,23 +1,16 @@
 const pz = require('./puzzle-strings');
 
-const plotSudoku = (stringInput) => {
-  for (let i = 0; i < 81; i = i + 9) {
-    console.log(stringInput.slice(i, i + 9).split('').join('\t'));
-    console.log("\n");
-  }
-}
-
 class SudokuSolver {
 
   constructor() {
     this.puzzleOptions = {};
-    // this.puzzleOptions = () => {
-    //   let retStatus = {}
-    //   for (let i = 0; i < 81; i++) {
-    //     retStatus[i] = [...Array(9).keys()].map(item => item + 1);
-    //   }
-    //   return retStatus;
-    // }
+  }
+
+  plotSudoku(puzzleState) {
+    for (let i = 0; i < 81; i = i + 9) {
+      console.log(puzzleState.slice(i, i + 9).split('').join('\t'));
+      console.log("\n");
+    }
   }
 
   updateInitOptions(puzzleString) {
@@ -80,6 +73,10 @@ class SudokuSolver {
   }
 
   solve(puzzleString) {
+
+    if (!this.validate(puzzleString)) {
+      return '';
+    }
 
     this.updateInitOptions(puzzleString);
 
