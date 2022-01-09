@@ -1,8 +1,8 @@
 
-* [ ] All puzzle logic can go into /controllers/sudoku-solver.js
-    * [ ] The validate function should take a given puzzle string and check it to see if it has 81 valid characters for the input.
-    * [ ] The check functions should be validating against the current state of the board.
-    * [ ] The solve function should handle solving any given valid puzzle string, not just the test inputs and solutions. You are expected to write out the logic to solve this.
+* [X] ~~*All puzzle logic can go into /controllers/sudoku-solver.js*~~ [2022-01-09]
+    * [X] ~~*The validate function should take a given puzzle string and check it to see if it has 81 valid characters for the input.*~~ [2022-01-09]
+    * [X] ~~*The check functions should be validating against the current state of the board.*~~ [2022-01-09]
+    * [X] ~~*The solve function should handle solving any given valid puzzle string, not just the test inputs and solutions. You are expected to write out the logic to solve this.*~~ [2022-01-09]
 * [ ] All routing logic can go into /routes/api.js
 * [ ] See the puzzle-strings.js file in /controllers for some sample puzzles your application should solve
 * [ ] To run the challenge tests on this page, set NODE_ENV to test without quotes in the .env file
