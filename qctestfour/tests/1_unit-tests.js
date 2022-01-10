@@ -13,21 +13,22 @@ suite('UnitTests', () => {
         let tempDump;
         for (const item of puzzleString) {
             tempDump = solver.validate(item[0])
-            assert.isBoolean(tempDump);
-            assert.isTrue(tempDump);
+            assert.property(tempDump, 'lengthOK');
+            assert.property(tempDump, 'charOK');
+            assert.isTrue(tempDump.lengthOK && tempDump.charOK);
         };
     });
 
     test("invalid char handler", function () {
         let tempDump = solver.validate('k' + SudokuLib.puzzlesAndSolutions[4][0].slice(1));
-        assert.isBoolean(tempDump);
-        assert.isFalse(tempDump);
+        assert.isTrue(tempDump.lengthOK);
+        assert.isFalse(tempDump.charOK);
     });
 
-    test("81 incorrect char handler", function () {
+    test("81 incorrect length handler", function () {
         let tempDump = solver.validate(SudokuLib.puzzlesAndSolutions[4][0].slice(1));
-        assert.isBoolean(tempDump);
-        assert.isFalse(tempDump);
+        assert.isFalse(tempDump.lengthOK);
+        assert.isTrue(tempDump.charOK);
     });
 
     test("valid row", function () {
@@ -75,7 +76,7 @@ suite('UnitTests', () => {
     test("invalid puzzle string to solver", function () {
         let tempDump = solver.solve('k' + SudokuLib.puzzlesAndSolutions[4][0].slice(1));
         assert.isString(tempDump);
-        assert.equal(tempDump, '');
+        assert.equal(tempDump, 'contain invalid char');
     });
 
     test("solver return the correct solution", function () {

@@ -4,14 +4,14 @@ class SudokuSolver {
 
   constructor() {
     this.puzzleOptions = {};
-  }
+  };
 
   plotSudoku(puzzleState) {
     for (let i = 0; i < 81; i = i + 9) {
       console.log(puzzleState.slice(i, i + 9).split('').join('\t'));
       console.log("\n");
-    }
-  }
+    };
+  };
 
   updateInitOptions(puzzleString) {
     for (let i = 0; i < 81; i++) {
@@ -19,20 +19,23 @@ class SudokuSolver {
         this.puzzleOptions[i] = [puzzleString[i]];
       } else {
         this.puzzleOptions[i] = [...Array(9).keys()].map(item => item + 1);
-      }
-    }
-  }
+      };
+    };
+  };
 
   validate(puzzleString) {
     let lengthCheck = puzzleString.length === 81;
-    let regexCheck = (new RegExp(/^[\d\.]{81}$/).test(puzzleString));
+    let regexCheck = (new RegExp(/^[\d\.]+$/).test(puzzleString));
 
-    return lengthCheck && regexCheck;
-  }
+    return ({
+      lengthOK: lengthCheck,
+      charOK: regexCheck,
+    });
+  };
 
   checkRowPlacement(puzzleString, row, column, value) {
     return !puzzleString.slice(row * 9, (row + 1) * 9).includes(String(value));
-  }
+  };
 
   checkColPlacement(puzzleString, row, column, value) {
     let colString = Object.entries(puzzleString)
@@ -40,7 +43,7 @@ class SudokuSolver {
       .map(([index, item]) => item);
 
     return !colString.includes(String(value));
-  }
+  };
 
   checkRegionPlacement(puzzleString, row, column, value) {
     let rowRegion = Math.floor(row / 3);
@@ -62,20 +65,28 @@ class SudokuSolver {
 
     let region = regionIndices.map(item => puzzleString[item]);
     return !region.includes(String(value));
-  }
+  };
 
   getrow(index) {
     return Math.floor(index / 9);
-  }
+  };
 
   getcolumn(index) {
     return index % 9;
-  }
+  };
 
   solve(puzzleString) {
 
-    if (!this.validate(puzzleString)) {
-      return '';
+    let stringCheck = this.validate(puzzleString);
+
+    if (stringCheck.lengthOK && stringCheck.charOK) {
+    
+    } else if (stringCheck.charOK) {
+      return 'invalid length';
+    } else if (stringCheck.lengthOK) {
+      return 'contain invalid char';
+    } else {
+      return 'invalid length and contain invalid char';
     }
 
     this.updateInitOptions(puzzleString);
@@ -163,9 +174,13 @@ class SudokuSolver {
       }
     }
 
-    return puzzle;
-  }
-}
+    if (puzzle == puzzleString) {
+      return 'cannot be solved';
+    } else {
+      return puzzle;
+    }
+  };
+};
 
 module.exports = SudokuSolver;
 

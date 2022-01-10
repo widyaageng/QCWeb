@@ -1,0 +1,107 @@
+POST http://localhost:3000/api/solve
+Content-Type: application/json; charset=utf-8
+
+{
+    "puzzle": "..9..5.1.85.4....2432......1...69.83.9.....6.62.71...9......1945....4.37.4.3..6.."
+}
+################################ ok
+POST http://localhost:3000/api/solve
+Content-Type: application/json; charset=utf-8
+
+{
+    "notpuzzle": "..9..5.1.85.4....2432......1...69.83.9.....6.62.71...9......1945....4.37.4.3..6.."
+}
+################################ missing field
+POST http://localhost:3000/api/solve
+Content-Type: application/json; charset=utf-8
+
+{
+    "puzzle": "AA9..5.1.85.4....2432......1...69.83.9.....6.62.71...9......1945....4.37.4.3..6.."
+}
+################################ wrong char
+POST http://localhost:3000/api/solve
+Content-Type: application/json; charset=utf-8
+
+{
+    "puzzle": "9..5.1.85.4....2432......1...69.83.9.....6.62.71...9......1945....4.37.4.3..6.."
+}
+################################ wrong length
+POST http://localhost:3000/api/solve
+Content-Type: application/json; charset=utf-8
+
+{
+    "puzzle": "9....5.1.85.4....2432......1...69.83.9.....6.62.71...9......1945....4.37.4.3..6.."
+}
+################################ ok
+POST http://localhost:3000/api/check
+Content-Type: application/json; charset=utf-8
+
+{
+    "puzzle": "9....5.1.85.4....2432......1...69.83.9.....6.62.71...9......1945....4.37.4.3..6..",
+    "coordinate": "A1",
+    "value": "7"
+}
+################################ ok
+POST http://localhost:3000/api/check
+Content-Type: application/json; charset=utf-8
+
+{
+    "puzzle": "9....5.1.85.4....2432......1...69.83.9.....6.62.71...9......1945....4.37.4.3..6..",
+    "coordinate": "A1",
+    "value": "1"
+}
+################################ conflict
+POST http://localhost:3000/api/check
+Content-Type: application/json; charset=utf-8
+
+{
+    "puzzle": "9....5.1.85.4....2432......1...69.83.9.....6.62.71...9......1945....4.37.4.3..6..",
+    "coordinate": "C3",
+    "value": "2"
+}
+################################ ok already
+POST http://localhost:3000/api/check
+Content-Type: application/json; charset=utf-8
+
+{
+    "puzzle": "AA9..5.1.85.4....2432......1...69.83.9.....6.62.71...9......1945....4.37.4.3..6..",
+    "coordinate": "A1",
+    "value": "1"
+}
+################################ puzzle has wrong char
+POST http://localhost:3000/api/check
+Content-Type: application/json; charset=utf-8
+
+{
+    "puzzle": "9..5.1.85.4....2432......1...69.83.9.....6.62.71...9......1945....4.37.4.3..6..",
+    "coordinate": "A1",
+    "value": "1"
+}
+################################ puzzle has incorrect length
+POST http://localhost:3000/api/check
+Content-Type: application/json; charset=utf-8
+
+{
+    "puzzle": "9....5.1.85.4....2432......1...69.83.9.....6.62.71...9......1945....4.37.4.3..6..",
+    "coordinate": "C3",
+    "value": "1"
+}
+################################ req body doesnt have required fields
+POST http://localhost:3000/api/check
+Content-Type: application/json; charset=utf-8
+
+{
+    "puzzle": "9....5.1.85.4....2432......1...69.83.9.....6.62.71...9......1945....4.37.4.3..6..",
+    "coordinate": "XZ18",
+    "value": "7"
+}
+################################  invalid coordinate
+POST http://localhost:3000/api/check
+Content-Type: application/json; charset=utf-8
+
+{
+    "puzzle": "9....5.1.85.4....2432......1...69.83.9.....6.62.71...9......1945....4.37.4.3..6..",
+    "coordinate": "A1",
+    "value": "X"
+}
+################################  invalid value
