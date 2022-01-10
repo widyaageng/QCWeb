@@ -36,7 +36,6 @@ module.exports = function (app) {
       } else {
         // parsing coordinate to row letter and column number
         coordinate = coordinate.split('');
-        console.log(coordinate);
         let regPattern = new RegExp(/^[ABCDEFGHI][123456789]$/);
 
         if (coordinate.length !== 2 || !regPattern.test(req.body.coordinate)) {
@@ -45,7 +44,7 @@ module.exports = function (app) {
 
         coordinate = {
           row: ROWLETTER[coordinate[0]],
-          column: coordinate[1] - 1
+          column: parseInt(coordinate[1]) - 1
         };
 
         if (!VALIDVALUE.includes(value)) {
@@ -66,22 +65,25 @@ module.exports = function (app) {
           });
         };
 
+        let locVal = coordinate.row * 9 + coordinate.column;
+        let copyPuzzle = puzzle.slice(0, locVal) + '.' + puzzle.slice(locVal + 1);
+
         let rowOK = solver.checkRowPlacement(
-          puzzle,
+          copyPuzzle,
           coordinate.row,
           coordinate.column,
           value
         );
 
         let columnOK = solver.checkColPlacement(
-          puzzle,
+          copyPuzzle,
           coordinate.row,
           coordinate.column,
           value
         );
 
         let regionOK = solver.checkRegionPlacement(
-          puzzle,
+          copyPuzzle,
           coordinate.row,
           coordinate.column,
           value
@@ -103,14 +105,14 @@ module.exports = function (app) {
 
         if (errourResOut.length > 0) {
           res.json(errourResOut[0]); // just throw the first qualifying error
-        } else if (flags.length < 1 || puzzle[coordinate.column * 9 + coordinate.row] == value) {
-          res.json({
-            valid: true,
-          });
-        } else {
+        } else if (flags.length > 0) {
           res.json({
             valid: false,
             conflict: flags
+          })
+        } else {
+          res.json({
+            valid: true,
           });
         };
       };
