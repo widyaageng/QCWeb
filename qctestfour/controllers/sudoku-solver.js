@@ -4,14 +4,14 @@ class SudokuSolver {
 
   constructor() {
     this.puzzleOptions = {};
-  }
+  };
 
   plotSudoku(puzzleState) {
     for (let i = 0; i < 81; i = i + 9) {
       console.log(puzzleState.slice(i, i + 9).split('').join('\t'));
       console.log("\n");
-    }
-  }
+    };
+  };
 
   updateInitOptions(puzzleString) {
     for (let i = 0; i < 81; i++) {
@@ -19,9 +19,9 @@ class SudokuSolver {
         this.puzzleOptions[i] = [puzzleString[i]];
       } else {
         this.puzzleOptions[i] = [...Array(9).keys()].map(item => item + 1);
-      }
-    }
-  }
+      };
+    };
+  };
 
   validate(puzzleString) {
     let lengthCheck = puzzleString.length === 81;
@@ -31,11 +31,11 @@ class SudokuSolver {
       lengthOK: lengthCheck,
       charOK: regexCheck,
     });
-  }
+  };
 
   checkRowPlacement(puzzleString, row, column, value) {
     return !puzzleString.slice(row * 9, (row + 1) * 9).includes(String(value));
-  }
+  };
 
   checkColPlacement(puzzleString, row, column, value) {
     let colString = Object.entries(puzzleString)
@@ -43,7 +43,7 @@ class SudokuSolver {
       .map(([index, item]) => item);
 
     return !colString.includes(String(value));
-  }
+  };
 
   checkRegionPlacement(puzzleString, row, column, value) {
     let rowRegion = Math.floor(row / 3);
@@ -65,15 +65,15 @@ class SudokuSolver {
 
     let region = regionIndices.map(item => puzzleString[item]);
     return !region.includes(String(value));
-  }
+  };
 
   getrow(index) {
     return Math.floor(index / 9);
-  }
+  };
 
   getcolumn(index) {
     return index % 9;
-  }
+  };
 
   solve(puzzleString) {
 
@@ -179,8 +179,8 @@ class SudokuSolver {
     } else {
       return puzzle;
     }
-  }
-}
+  };
+};
 
 module.exports = SudokuSolver;
 
