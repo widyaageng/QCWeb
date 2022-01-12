@@ -51,16 +51,41 @@ class Translator {
     toLowerCaseArray(text) {
         let cleanedUpText = text.match(/^(.*)[!?.]+$/)[1];
 
-        return cleanedUpText.toLowerCase().split(/\s+/);
+        return {
+            lowercase: cleanedUpText.toLowerCase().split(/\s+/),
+            originalcase : cleanedUpText.split(/\s+/)
+        };
     };
 
 
     findPair(lowerCaseArray, direction) {
-        for (let word of lowerCaseArray) {
+        let translated = [];
 
+        for (const [index, elem] of Object.entries(lowerCaseArray)) {
+            if (direction.spelling[elem]) {
+                translated.push(elem);
+            } else if (direction.titles[elem]) {
+                translated.push(elem);
+            } else if (direction.self[elem]) {
+                translated.push(elem);
+            } else {
+                translated.push('');
+            };
         }
+        return translated;
     };
 
+    receoverLetter(originalArray, translation) {
+        if (originalArray.length !== translation.length) {
+            return 'Number of translated word array arent the same.'
+        } else {
+            for (const [index, word] of originalArray) {
+                if (word[0] === translation[index][0].toUpperCase()) {
+                    translation[index] = translation[index].slice(0).toUpperCase() + translation[index].slice(1).toUpperCase()
+                }
+            }
+        }
+    }
 };
 
 module.exports = Translator;
