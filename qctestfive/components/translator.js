@@ -3,9 +3,6 @@ const americanToBritishSpelling = require('./american-to-british-spelling.js');
 const americanToBritishTitles = require("./american-to-british-titles.js")
 const britishOnly = require('./british-only.js')
 
-let britishToAmericanSpelling;
-let britishToAmericanTitles;
-
 const BRITISHDIRECTION = 'american-to-british';
 const AMERICANDIRECTION = 'british-to-american';
 
@@ -37,13 +34,13 @@ class Translator {
             return {
                 spelling: americanToBritishSpelling,
                 titles: americanToBritishTitles,
-                self: britishOnly
+                self: americanOnly
             };
         } else if (payloadLocale === AMERICANDIRECTION) {
             return {
                 spelling: this.britToAmericanSpelling,
                 titles: this.britToAmericanTitles,
-                self: americanOnly
+                self: britishOnly
             };
         };
     };
@@ -137,6 +134,10 @@ class Translator {
 
     translate(rawtext, translateDirection) {
 
+        if (rawtext == null || rawtext == '') {
+            return 'No text to translate';
+        };
+
         if (!this.initiated) {
             this.initBritToAmericaSpelling();
             this.initBritToAmericaTitles();
@@ -149,11 +150,19 @@ class Translator {
 
         let recoveredTranslation = this.recoverLetter(originalArray.originalcase, translatedArray);
 
-        return this.timeCorrection(recoveredTranslation.join(' ') + originalArray.endOfSentence, translateDirection);
+        let translated = this.timeCorrection(recoveredTranslation.join(' ') + originalArray.endOfSentence, translateDirection);
+
+        if (translated === rawtext) {
+            return 'Everything looks good to me!';
+        };
+
+        return translated;
     };
 };
 
 let newTranslator = new Translator();
-let translated = newTranslator.translate('Dr. Grosh will see you now.', BRITISHDIRECTION);
+let translated = newTranslator.translate('Mangoes are my favorite fruit.', BRITISHDIRECTION);
+
 console.log(translated);
+
 module.exports = Translator;
